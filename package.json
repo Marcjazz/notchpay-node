@@ -1,0 +1,40 @@
+{
+  "name": "notchpay-node",
+  "version": "1.0.0",
+  "description": "Notch Pay JavaScript sdk for easy payment integrations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marcjazz/notchpay-node.git"
+  },
+  "keywords": [
+    "notch",
+    "pay",
+    "notchpay",
+    "mobile",
+    "money",
+    "orange",
+    "money",
+    "node",
+    "nodejs",
+    "javascript",
+    "typescript",
+    "payment",
+    "gateway",
+    "cameroon",
+    "cameroun"
+  ],
+  "author": "Kuidja Marco (https://github.com/marcjazz)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Marcjazz/notchpay-node/issues"
+  },
+  "homepage": "https://github.com/Marcjazz/notchpay-node#readme",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "typescript": "^5.3.2"
+  }
+}
