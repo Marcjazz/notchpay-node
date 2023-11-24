@@ -1,6 +1,5 @@
 import { FindAllResponse, PaymentChannel } from '../type'
 import { Business, Customer } from '../type'
-import { Transaction } from './payment'
 
 export type Item = {
   /** Description of the item. Required param */
