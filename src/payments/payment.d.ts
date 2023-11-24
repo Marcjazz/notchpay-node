@@ -25,7 +25,7 @@ export type Address = {
 export type InitializePaymentPayload<T extends object = unknown> = {
   /**The email address of the customer is prominently displayed within your dashboard, and serves as a valuable tool for both search and tracking purposes.
    * Please note that this field allows for up to 512 characters. */
-  email: string
+  email?: string
   /** Currency of transaction. */
   currency: string
   /** Amount to be charged for the payment. According to currency. */
@@ -52,7 +52,7 @@ export type InitializePaymentPayload<T extends object = unknown> = {
   shipping?: Address
   /** A collection of objects containing the item image, price and description*/
   items?: Item[]
-}
+} & ({ email: string } | { phone: string })
 
 export type Business = {
   id: string

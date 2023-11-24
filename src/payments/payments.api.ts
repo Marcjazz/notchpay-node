@@ -2,9 +2,7 @@ import { AxiosInstance } from 'axios'
 import { InitializePaymentPayload, PaymentResponse } from './payment'
 
 export class PaymentsApi {
-  constructor(private readonly axiosInstance: AxiosInstance) {
-    this.axiosInstance.defaults.baseURL = `${this.axiosInstance.defaults.baseURL}/payments`
-  }
+  constructor(private readonly axiosInstance: AxiosInstance) {}
 
   async initialize(
     payload: InitializePaymentPayload
@@ -14,7 +12,10 @@ export class PaymentsApi {
         transaction: { updated_at, initiated_at, ...transaction },
         ...data
       },
-    } = await this.axiosInstance.post<PaymentResponse>('/initialize', payload)
+    } = await this.axiosInstance.post<PaymentResponse>(
+      '/payments/initialize',
+      payload
+    )
     return {
       ...data,
       transaction: {
