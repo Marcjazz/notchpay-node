@@ -9,6 +9,7 @@ export default class NotchPayApi {
       baseURL: `https://${config.endpoint}`,
       headers: {
         Authorization: config.publicKey,
+        'Grant-Authorization': config.secretKey,
       },
     })
   }
