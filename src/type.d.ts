@@ -26,3 +26,28 @@ export type NotchPayEvent<T> = {
   event: EventType
   data: T extends object ? T : unknown
 }
+
+export type Business = {
+  id: string
+  country: string
+  email: string
+  phone: string
+  poster: null | string
+  name: string
+}
+
+export type Customer = {
+  id: string
+  name: null | string
+  email: string
+  sandbox: boolean
+  phone: null | string
+  blocked: boolean
+}
+
+export type PaymentChannel =
+  | 'cm.mtn'
+  | 'cm.orange'
+  | 'cm.mobile'
+  | 'paypal'
+  | 'card'
