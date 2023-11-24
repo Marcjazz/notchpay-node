@@ -39,7 +39,7 @@ export default class NotchPayApi {
    */
   verifySignature<T>(request: Request, secretKey?: string) {
     const merchantSecretKey = secretKey ?? this.config.secretKey
-    if (!merchantSecretKey) throw new Error('Secret key must be provided')
+    if (!merchantSecretKey) throw new Error('Merchant Secret key is required')
     const signature = crypto
       .createHmac('sha256', merchantSecretKey)
       .update(JSON.stringify(request.body))

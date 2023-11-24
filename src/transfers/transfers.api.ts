@@ -9,8 +9,12 @@ export default class TranfersApi {
   constructor(private readonly axiosInstance: AxiosInstance) {}
 
   async initialize(
-    payload: InitializeTransferPayload
+    payload: InitializeTransferPayload,
+    secretKey?: string
   ): Promise<TransferResponse> {
+    const merchantSecretKey =
+      secretKey ?? this.axiosInstance.defaults.headers['Grant-Authorization']
+    if (!merchantSecretKey) throw new Error('Merchant Secret key is required')
     const resp = await this.axiosInstance.post<TransferResponse>(
       `/transfers/initialize`,
       payload
