@@ -29,3 +29,14 @@ test('Should initialize payment', async () => {
   expect(data).toHaveProperty('status', 'Accepted')
   expect(data).toHaveProperty('message', 'Payment initialized')
 })
+
+test('Should get all payments', async () => {
+  const data = await notchPayApi.payments.getPayments(10, 1)
+  expect(data).toHaveProperty('code', 200)
+  expect(data).toHaveProperty('status', 'OK')
+  expect(data).toHaveProperty('message', 'Payments retrieved')
+  expect(data).toHaveProperty('totals')
+  expect(data).toHaveProperty('last_page')
+  expect(data).toHaveProperty('current_page', 1)
+  expect(Array.isArray(data.items)).toBeTruthy()
+})
