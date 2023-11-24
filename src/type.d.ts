@@ -51,3 +51,21 @@ export type PaymentChannel =
   | 'cm.mobile'
   | 'paypal'
   | 'card'
+
+export type Channel = {
+  name: string
+  type: string
+  id: TransferChannel
+}
+export type TransferChannel = Exclude<PaymentChannel, 'card'>
+
+export type FindAllResponse<Item> = {
+  code: number
+  status: string
+  message: string
+  totals: number
+  last_page: number
+  current_page: number
+  selected: number
+  items: Item[]
+}

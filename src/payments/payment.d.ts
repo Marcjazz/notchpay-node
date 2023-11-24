@@ -1,4 +1,4 @@
-import { PaymentChannel } from '../type'
+import { FindAllResponse, PaymentChannel } from '../type'
 import { Business, Customer } from '../type'
 import { Transaction } from './payment'
 
@@ -67,16 +67,7 @@ export type PaymentResponse = {
   authorization_url?: string
 }
 
-export type PaymentsResponse = {
-  code: number
-  status: string
-  message: string
-  totals: number
-  last_page: number
-  current_page: number
-  selected: number
-  items: Transaction[]
-}
+export type PaymentsResponse = FindAllResponse<Transaction>
 
 export type CompletePaymentResponse = {
   status: string

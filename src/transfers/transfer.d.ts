@@ -1,6 +1,6 @@
-import { Business, PaymentChannel } from '../type'
+import { Channel, TransferChannel } from '../type'
+import { Business, FindAllResponse } from '../type'
 
-export type TransferChannel = Exclude<PaymentChannel, 'card'>
 export type InitializeTransferPayload = {
   /** Currency of transaction. */
   currency: string
@@ -16,12 +16,6 @@ export type InitializeTransferPayload = {
     phone: string
   }
   reference?: string
-}
-
-export type Channel = {
-  name: string
-  type: string
-  id: TransferChannel
 }
 
 export type Receiver = {
@@ -59,3 +53,5 @@ export type TransferResponse = {
   code: number
   transfer: Transfer
 }
+
+export type TransfersResponse = FindAllResponse<Transfer>
