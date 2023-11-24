@@ -22,8 +22,10 @@ export default class NotchPayApi {
    * This endpoint allows you to retrieve your merchant information's.
    */
   async getHello(): Promise<HelloResponse> {
-    const resp = await this.axiosInstance.get('/')
-    return resp.data
+    const {
+      data: { code, ...data },
+    } = await this.axiosInstance.get<HelloResponse>('/')
+    return { code: Number(code), ...data }
   }
 
   /**

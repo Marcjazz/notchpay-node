@@ -6,7 +6,7 @@ export type NotchPayConfig = {
 
 export type HelloResponse = {
   env: string
-  code: string
+  code: number
   message: string
   greeting: string
   merchant: string
