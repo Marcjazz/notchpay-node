@@ -11,3 +11,18 @@ export type HelloResponse = {
   greeting: string
   merchant: string
 }
+
+export type EventType =
+  | 'payment.complete'
+  | 'payment.failed'
+  | 'payment.canceled'
+  | 'payment.expired'
+  | 'transfer.sent'
+  | 'transfer.failed'
+  | 'transfer.complete'
+
+export type NotchPayEvent<T> = {
+  id: string
+  event: EventType
+  data: T extends object ? T : unknown
+}
