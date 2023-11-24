@@ -3,8 +3,10 @@ import { Request } from 'express'
 import axios, { AxiosInstance } from 'axios'
 import { HelloResponse, NotchPayConfig, NotchPayEvent } from './type'
 import { PaymentsApi } from './payments/payments.api'
+import TransferApi from './transfers/transfers.api'
 export default class NotchPayApi {
   payments: PaymentsApi
+  transfers: TransferApi
   axiosInstance: AxiosInstance
   constructor(private config: NotchPayConfig) {
     this.axiosInstance = axios.create({
@@ -15,6 +17,7 @@ export default class NotchPayApi {
       },
     })
     this.payments = new PaymentsApi(this.axiosInstance)
+    this.transfers = new TransferApi(this.axiosInstance)
   }
 
   /**
