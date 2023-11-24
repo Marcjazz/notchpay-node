@@ -8,10 +8,12 @@ const notchPayApi = new NotchPayApi({
 
 test('Should return `HelloResponse`', async () => {
   const data = await notchPayApi.getHello()
-  expect(data).toHaveProperty('env')
-  expect(data).toHaveProperty('code')
-  expect(data).toHaveProperty('message')
-  expect(data).toHaveProperty('greeting')
-  expect(data).toHaveProperty('merchant')
+  expect(data).toEqual({
+    env: expect.any(String),
+    code: expect.any(String),
+    message: expect.any(String),
+    merchant: expect.any(String),
+    greeting: expect.any(String),
+  })
   expect(data.greeting).toBe('Hello from Notch Pay')
 })
