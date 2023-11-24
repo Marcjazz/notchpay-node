@@ -69,3 +69,12 @@ export type FindAllResponse<Item> = {
   selected: number
   items: Item[]
 }
+
+export type NotchPayError = {
+  code: 401 | 403 | 404 | 406 | 409 | 422
+  status: string
+  message: string
+  errors: object
+}
+
+export type NotchPayErrorResponse = { data: NotchPayError }
