@@ -40,3 +40,31 @@ test('Should get all payments', async () => {
   expect(data).toHaveProperty('current_page', 1)
   expect(Array.isArray(data.items)).toBeTruthy()
 })
+
+test('Should complete initialized payment', async () => {
+  const { items } = await notchPayApi.payments.getPayments(1, 1)
+  const paymentRef = items.find((item) => item.status === 'pending')?.reference
+  if (paymentRef) {
+    const data = await notchPayApi.payments.completePayment(paymentRef, {
+      channel: 'cm.orange',
+      data: { phone: '+237691622731' },
+    })
+    expect(data).toHaveProperty('code', 202)
+    expect(data).toHaveProperty('action', 'confirm')
+    expect(data).toHaveProperty('status', 'Accepted')
+    expect(data).toHaveProperty(
+      'message',
+      'Confirm your transaction by dialing #150#'
+    )
+  }
+})
+
+test('Should cancel payment', async () => {
+  const { items } = await notchPayApi.payments.getPayments()
+  const paymentRef = items.find((item) => item.status !== 'complete')?.reference
+  if (paymentRef) {
+    const data = await notchPayApi.payments.cancelPayment(paymentRef)
+    expect(data).toHaveProperty('code', 202)
+    expect(data).toHaveProperty('message', 'Your transaction has been canceled')
+  }
+})
