@@ -1,5 +1,7 @@
 import { AxiosInstance } from 'axios'
 import {
+  CompletePaymentPayload,
+  CompletePaymentResponse,
   InitializePaymentPayload,
   PaymentResponse,
   PaymentsResponse,
@@ -62,5 +64,21 @@ export class PaymentsApi {
       ...data,
       items: items.map((item) => formatTransaction(item)),
     }
+  }
+
+  async completePayment(paymentRef: string, payload: CompletePaymentPayload) {
+    const resp = await this.axiosInstance.put<CompletePaymentResponse>(
+      `/payments/${paymentRef}`,
+      payload
+    )
+    return resp.data
+  }
+
+  async cancelPayment(paymentRef: string) {
+    const resp = await this.axiosInstance.delete<{
+      code: number
+      message: string
+    }>(`/payments/${paymentRef}`)
+    return resp.data
   }
 }

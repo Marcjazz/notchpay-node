@@ -72,6 +72,19 @@ export type Customer = {
   blocked: boolean
 }
 
+export type TransactionStatus =
+  | 'pending'
+  | 'failed'
+  | 'complete'
+  | 'rejected'
+  | 'canceled'
+  | 'abandoned'
+  | 'expired'
+  | 'hold'
+  | 'incomplete'
+  | 'processing'
+  | 'refunded'
+
 export type Transaction = {
   amount: number
   amount_total: number
@@ -83,7 +96,7 @@ export type Transaction = {
   description: string
   reference: string
   merchant_reference: string
-  status: string
+  status: TransactionStatus
   currency: string
   initiated_at: Date
   updated_at: Date
@@ -108,3 +121,46 @@ export type PaymentsResponse = {
   selected: number
   items: Transaction[]
 }
+
+export type CompletePaymentResponse = {
+  status: string
+  message: string
+  code: number
+  action: string
+}
+
+export type PaymentChannel =
+  | 'cm.mtn'
+  | 'cm.orange'
+  | 'cm.mobile'
+  | 'paypal'
+  | 'card'
+
+export type CardDetails = {
+  name: string
+  exp: string
+  cvc: string
+  card_number: string
+}
+
+export type CompletePaymentPayload =
+  | {
+      channel: PaymentChannel
+    } & (
+      | {
+          channel: 'cm.mtn' | 'cm.orange' | 'cm.mobile'
+          data: {
+            phone: string
+          }
+        }
+      | {
+          channel: 'paypal'
+          data: {
+            email: string
+          }
+        }
+      | {
+          channel: 'card'
+          data: CardDetails
+        }
+    )
