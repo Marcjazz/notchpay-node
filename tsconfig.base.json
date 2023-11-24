@@ -2,6 +2,7 @@
   "compileOnSave": true,
   "compilerOptions": {
     "strict": true,
+    "outDir": "./dist",
     "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
@@ -11,11 +12,11 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2015"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts"],
   "exclude": ["node_modules"]
 }
