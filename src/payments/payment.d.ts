@@ -97,3 +97,14 @@ export type PaymentResponse = {
   /** Authorization url is only returned for initialize payment */
   authorization_url?: string
 }
+
+export type PaymentsResponse = {
+  code: number
+  status: string
+  message: string
+  totals: number
+  last_page: number
+  current_page: number
+  selected: number
+  items: Transaction[]
+}
