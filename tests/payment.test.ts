@@ -1,22 +1,4 @@
-import NotchPayApi from '../src/index'
-
-const notchPayApi = new NotchPayApi({
-  endpoint: 'api.notchpay.co',
-  publicKey: 'sb.MplYCLvoRMzeY1xRjAXtV7jt1mnrcVmS',
-  secretKey: 'sb.MplYCLvoRMzeY1xRjAXtV7jt1mnrcVmS',
-})
-
-test('Should return `HelloResponse`', async () => {
-  const data = await notchPayApi.getHello()
-  expect(data).toEqual({
-    env: expect.any(String),
-    code: expect.any(Number),
-    message: expect.any(String),
-    merchant: expect.any(String),
-    greeting: expect.any(String),
-  })
-  expect(data.greeting).toBe('Hello from Notch Pay')
-})
+import { notchPayApi } from './setup'
 
 test('Should initialize payment', async () => {
   const data = await notchPayApi.payments.initialize({
@@ -24,6 +6,7 @@ test('Should initialize payment', async () => {
     currency: 'XAF',
     phone: '+237691622731',
   })
+  expect(data).toBeDefined()
   expect(data).toHaveProperty('code', 201)
   expect(data).toHaveProperty('transaction')
   expect(data).toHaveProperty('status', 'Accepted')
@@ -31,7 +14,7 @@ test('Should initialize payment', async () => {
 })
 
 test('Should get all payments', async () => {
-  const data = await notchPayApi.payments.getPayments(10, 1)
+  const data = await notchPayApi.payments.findAll(10, 1)
   expect(data).toHaveProperty('code', 200)
   expect(data).toHaveProperty('status', 'OK')
   expect(data).toHaveProperty('message', 'Payments retrieved')
@@ -42,13 +25,16 @@ test('Should get all payments', async () => {
 })
 
 test('Should complete initialized payment', async () => {
-  const { items } = await notchPayApi.payments.getPayments(1, 1)
-  const paymentRef = items.find((item) => item.status === 'pending')?.reference
+  const resp = await notchPayApi.payments.findAll(1, 1)
+  const paymentRef = resp.items.find(
+    (item) => item.status === 'pending'
+  )?.reference
   if (paymentRef) {
-    const data = await notchPayApi.payments.completePayment(paymentRef, {
+    const data = await notchPayApi.payments.complete(paymentRef, {
       channel: 'cm.orange',
       data: { phone: '+237691622731' },
     })
+    expect(data).toBeDefined()
     expect(data).toHaveProperty('code', 202)
     expect(data).toHaveProperty('action', 'confirm')
     expect(data).toHaveProperty('status', 'Accepted')
@@ -60,10 +46,13 @@ test('Should complete initialized payment', async () => {
 })
 
 test('Should cancel payment', async () => {
-  const { items } = await notchPayApi.payments.getPayments()
+  const { items } = await notchPayApi.payments.findAll()
   const paymentRef = items.find((item) => item.status !== 'complete')?.reference
   if (paymentRef) {
-    const data = await notchPayApi.payments.cancelPayment(paymentRef)
+    const data = await notchPayApi.payments
+      .cancel(paymentRef)
+      .catch((error) => console.log(error.response?.data))
+    expect(data).toBeDefined()
     expect(data).toHaveProperty('code', 202)
     expect(data).toHaveProperty('message', 'Your transaction has been canceled')
   }
