@@ -2,7 +2,9 @@ import crypto from 'crypto'
 import { Request } from 'express'
 import axios, { AxiosInstance } from 'axios'
 import { HelloResponse, NotchPayConfig, NotchPayEvent } from './type'
+import { PaymentsApi } from './payments/payments.api'
 export default class NotchPayApi {
+  payments: PaymentsApi
   axiosInstance: AxiosInstance
   constructor(private config: NotchPayConfig) {
     this.axiosInstance = axios.create({
@@ -12,6 +14,7 @@ export default class NotchPayApi {
         'Grant-Authorization': config.secretKey,
       },
     })
+    this.payments = new PaymentsApi(this.axiosInstance)
   }
 
   /**
@@ -19,8 +22,10 @@ export default class NotchPayApi {
    * This endpoint allows you to retrieve your merchant information's.
    */
   async getHello(): Promise<HelloResponse> {
-    const resp = await this.axiosInstance.get('/')
-    return resp.data
+    const {
+      data: { code, ...data },
+    } = await this.axiosInstance.get<HelloResponse>('/')
+    return { code: Number(code), ...data }
   }
 
   /**
