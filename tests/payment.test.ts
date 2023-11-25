@@ -1,11 +1,13 @@
 import { notchPayApi } from './setup'
 
 test('Should initialize payment', async () => {
-  const data = await notchPayApi.payments.initialize({
-    amount: 500,
-    currency: 'XAF',
-    phone: '+237691622731',
-  })
+  const data = await notchPayApi.payments
+    .initialize({
+      amount: 500,
+      currency: 'XAF',
+      phone: '+237691622731',
+    })
+    .catch((error) => console.log(error.response?.data))
   expect(data).toBeDefined()
   expect(data).toHaveProperty('code', 201)
   expect(data).toHaveProperty('transaction')
@@ -25,24 +27,32 @@ test('Should get all payments', async () => {
 })
 
 test('Should complete initialized payment', async () => {
-  const resp = await notchPayApi.payments.findAll(1, 1)
-  const paymentRef = resp.items.find(
-    (item) => item.status === 'pending'
-  )?.reference
-  if (paymentRef) {
-    const data = await notchPayApi.payments.complete(paymentRef, {
-      channel: 'cm.orange',
+  const initializePayment = await notchPayApi.payments
+    .initialize({
+      amount: 500,
+      currency: 'XAF',
+      phone: '+237691622731',
+    })
+    .catch((error) => {
+      console.log(error.response?.data)
+      return null
+    })
+  expect(initializePayment).not.toBeNull()
+  const data = await notchPayApi.payments
+    .complete(initializePayment?.transaction.reference as string, {
+      channel: 'cm.mobile',
       data: { phone: '+237691622731' },
     })
-    expect(data).toBeDefined()
-    expect(data).toHaveProperty('code', 202)
-    expect(data).toHaveProperty('action', 'confirm')
-    expect(data).toHaveProperty('status', 'Accepted')
-    expect(data).toHaveProperty(
-      'message',
-      'Confirm your transaction by dialing #150#'
-    )
-  }
+    .catch((error) => console.log(error.response?.data))
+
+  expect(data).toBeDefined()
+  expect(data).toHaveProperty('code', 202)
+  expect(data).toHaveProperty('action', 'confirm')
+  expect(data).toHaveProperty('status', 'Accepted')
+  expect(data).toHaveProperty(
+    'message',
+    'Confirm your transaction by dialing #150*50#'
+  )
 })
 
 test('Should cancel payment', async () => {
