@@ -2,6 +2,7 @@
   "compileOnSave": true,
   "compilerOptions": {
     "strict": true,
+    "outDir": "./dist",
     "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
@@ -10,12 +11,13 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2015",
-    "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "module": "commonjs",
+    "lib": ["es2015"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "jest"]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts"],
   "exclude": ["node_modules"]
 }
