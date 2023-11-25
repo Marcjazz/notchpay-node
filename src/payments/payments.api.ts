@@ -1,84 +1,52 @@
 import { AxiosInstance } from 'axios'
+import { NotchPayErrorResponse } from '../type'
 import {
   CompletePaymentPayload,
   CompletePaymentResponse,
   InitializePaymentPayload,
   PaymentResponse,
   PaymentsResponse,
-  Transaction,
 } from './payment'
-
-const formatTransaction = ({
-  updated_at,
-  initiated_at,
-  ...transaction
-}: Transaction) => {
-  return {
-    ...transaction,
-    updated_at: new Date(updated_at),
-    initiated_at: new Date(initiated_at),
-  }
-}
 
 export class PaymentsApi {
   constructor(private readonly axiosInstance: AxiosInstance) {}
 
-  async initialize(
-    payload: InitializePaymentPayload
-  ): Promise<PaymentResponse> {
-    const {
-      data: { transaction, ...data },
-    } = await this.axiosInstance.post<PaymentResponse>(
-      '/payments/initialize',
-      payload
-    )
-    return {
-      ...data,
-      transaction: formatTransaction(transaction),
-    }
+  async initialize(payload: InitializePaymentPayload) {
+    const resp = await this.axiosInstance
+      .post<PaymentResponse>('/payments/initialize', payload)
+      .catch((error) => error.response as NotchPayErrorResponse)
+    return { ...resp.data, code: Number(resp.data.code) }
   }
 
-  async getPayment(
-    paymentRef: string,
-    currency?: string
-  ): Promise<PaymentResponse> {
-    const {
-      data: { transaction, ...data },
-    } = await this.axiosInstance.get<PaymentResponse>(
+  async findOne(paymentRef: string, currency?: string) {
+    const resp = await this.axiosInstance.get<PaymentResponse>(
       `/payments/${paymentRef}`,
       { params: { currency } }
     )
-    return {
-      ...data,
-      transaction: formatTransaction(transaction),
-    }
+    return { ...resp.data, code: Number(resp.data.code) }
   }
 
-  async getPayments(perpage?: number, page?: number) {
-    const {
-      data: { items, ...data },
-    } = await this.axiosInstance.get<PaymentsResponse>(`/payments`, {
+  async findAll(perpage?: number, page?: number) {
+    const resp = await this.axiosInstance.get<PaymentsResponse>(`/payments`, {
       params: { perpage, page },
     })
-    return {
-      ...data,
-      items: items.map((item) => formatTransaction(item)),
-    }
+    return { ...resp.data, code: Number(resp.data.code) }
   }
 
-  async completePayment(paymentRef: string, payload: CompletePaymentPayload) {
-    const resp = await this.axiosInstance.put<CompletePaymentResponse>(
-      `/payments/${paymentRef}`,
-      payload
-    )
-    return resp.data
+  async complete(paymentRef: string, payload: CompletePaymentPayload) {
+    const resp = await this.axiosInstance
+      .put<CompletePaymentResponse>(`/payments/${paymentRef}`, payload)
+      .catch((error) => error.response as NotchPayErrorResponse)
+    return { ...resp.data, code: Number(resp.data.code) }
   }
 
-  async cancelPayment(paymentRef: string) {
-    const resp = await this.axiosInstance.delete<{
-      code: number
-      message: string
-    }>(`/payments/${paymentRef}`)
-    return resp.data
+  async cancel(paymentRef: string) {
+    const resp = await this.axiosInstance
+      .delete<{
+        code: number
+        message: string
+      }>(`/payments/${paymentRef}`)
+      .catch((error) => error.response as NotchPayErrorResponse)
+    return { ...resp.data, code: Number(resp.data.code) }
   }
 }

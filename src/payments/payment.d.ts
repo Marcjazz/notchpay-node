@@ -1,3 +1,6 @@
+import { FindAllResponse, PaymentChannel } from '../type'
+import { Business, Customer } from '../type'
+
 export type Item = {
   /** Description of the item. Required param */
   description: string
@@ -54,23 +57,52 @@ export type InitializePaymentPayload<T extends object = unknown> = {
   items?: Item[]
 } & ({ email: string } | { phone: string })
 
-export type Business = {
-  id: string
-  country: string
-  email: string
-  phone: string
-  poster: null | string
-  name: string
+export type PaymentResponse = {
+  status: string
+  message: string
+  code: number
+  transaction: Transaction
+  /** Authorization url is only returned for initialize payment */
+  authorization_url?: string
 }
 
-export type Customer = {
-  id: string
-  name: null | string
-  email: string
-  sandbox: boolean
-  phone: null | string
-  blocked: boolean
+export type PaymentsResponse = FindAllResponse<Transaction>
+
+export type CompletePaymentResponse = {
+  status: string
+  message: string
+  code: number
+  action: string
 }
+
+export type CardDetails = {
+  name: string
+  exp: string
+  cvc: string
+  card_number: string
+}
+
+export type CompletePaymentPayload =
+  | {
+      channel: PaymentChannel
+    } & (
+      | {
+          channel: 'cm.mtn' | 'cm.orange' | 'cm.mobile'
+          data: {
+            phone: string
+          }
+        }
+      | {
+          channel: 'paypal'
+          data: {
+            email: string
+          }
+        }
+      | {
+          channel: 'card'
+          data: CardDetails
+        }
+    )
 
 export type TransactionStatus =
   | 'pending'
@@ -101,66 +133,3 @@ export type Transaction = {
   initiated_at: Date
   updated_at: Date
 }
-
-export type PaymentResponse = {
-  status: string
-  message: string
-  code: number
-  transaction: Transaction
-  /** Authorization url is only returned for initialize payment */
-  authorization_url?: string
-}
-
-export type PaymentsResponse = {
-  code: number
-  status: string
-  message: string
-  totals: number
-  last_page: number
-  current_page: number
-  selected: number
-  items: Transaction[]
-}
-
-export type CompletePaymentResponse = {
-  status: string
-  message: string
-  code: number
-  action: string
-}
-
-export type PaymentChannel =
-  | 'cm.mtn'
-  | 'cm.orange'
-  | 'cm.mobile'
-  | 'paypal'
-  | 'card'
-
-export type CardDetails = {
-  name: string
-  exp: string
-  cvc: string
-  card_number: string
-}
-
-export type CompletePaymentPayload =
-  | {
-      channel: PaymentChannel
-    } & (
-      | {
-          channel: 'cm.mtn' | 'cm.orange' | 'cm.mobile'
-          data: {
-            phone: string
-          }
-        }
-      | {
-          channel: 'paypal'
-          data: {
-            email: string
-          }
-        }
-      | {
-          channel: 'card'
-          data: CardDetails
-        }
-    )
