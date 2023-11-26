@@ -1,5 +1,4 @@
 import { AxiosInstance } from 'axios'
-import { NotchPayErrorResponse } from '../type'
 import {
   CompletePaymentPayload,
   CompletePaymentResponse,
@@ -12,9 +11,10 @@ export class PaymentsApi {
   constructor(private readonly axiosInstance: AxiosInstance) {}
 
   async initialize(payload: InitializePaymentPayload) {
-    const resp = await this.axiosInstance
-      .post<PaymentResponse>('/payments/initialize', payload)
-      .catch((error) => error.response as NotchPayErrorResponse)
+    const resp = await this.axiosInstance.post<PaymentResponse>(
+      '/payments/initialize',
+      payload
+    )
     return { ...resp.data, code: Number(resp.data.code) }
   }
 
@@ -34,19 +34,18 @@ export class PaymentsApi {
   }
 
   async complete(paymentRef: string, payload: CompletePaymentPayload) {
-    const resp = await this.axiosInstance
-      .put<CompletePaymentResponse>(`/payments/${paymentRef}`, payload)
-      .catch((error) => error.response as NotchPayErrorResponse)
+    const resp = await this.axiosInstance.put<CompletePaymentResponse>(
+      `/payments/${paymentRef}`,
+      payload
+    )
     return { ...resp.data, code: Number(resp.data.code) }
   }
 
   async cancel(paymentRef: string) {
-    const resp = await this.axiosInstance
-      .delete<{
-        code: number
-        message: string
-      }>(`/payments/${paymentRef}`)
-      .catch((error) => error.response as NotchPayErrorResponse)
+    const resp = await this.axiosInstance.delete<{
+      code: number
+      message: string
+    }>(`/payments/${paymentRef}`)
     return { ...resp.data, code: Number(resp.data.code) }
   }
 }
