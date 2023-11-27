@@ -9,7 +9,7 @@ import { HelloResponse, NotchPayConfig, NotchPayEvent } from './types'
 export type * from './types'
 
 let axiosInstance: AxiosInstance
-export default class NotchPayApi {
+export default class NotchPay {
   payments: PaymentsApi
   transfers: TransferApi
   miscellaneous: MiscellaneousApi
