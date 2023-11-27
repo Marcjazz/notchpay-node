@@ -1,11 +1,10 @@
 import axios, { AxiosInstance } from 'axios'
-import * as crypto from 'crypto'
-import { Request } from 'express'
 
-import { HelloResponse, NotchPayConfig, NotchPayEvent } from './types'
 import MiscellaneousApi from './miscellaneous/miscellaneous.api'
 import PaymentsApi from './payments/payments.api'
 import TransferApi from './transfers/transfers.api'
+import { HelloResponse, NotchPayConfig } from './types'
+import { WebhooksService } from './webhooks/webhooks.service'
 
 export type * from './types'
 
@@ -14,6 +13,7 @@ export default class NotchPay {
   payments: PaymentsApi
   transfers: TransferApi
   miscellaneous: MiscellaneousApi
+  webhooks: WebhooksService
 
   constructor(config: NotchPayConfig) {
     axiosInstance = axios.create({
@@ -26,6 +26,7 @@ export default class NotchPay {
     this.payments = new PaymentsApi(axiosInstance)
     this.transfers = new TransferApi(axiosInstance)
     this.miscellaneous = new MiscellaneousApi(axiosInstance)
+    this.webhooks = new WebhooksService(axiosInstance)
   }
 
   /**
@@ -37,25 +38,5 @@ export default class NotchPay {
       data: { code, ...data },
     } = await axiosInstance.get<HelloResponse>('/')
     return { code: Number(code), ...data }
-  }
-
-  /**
-   * Verify incoming request to confirmed they were fowarded to you by notch pay server
-   * @param request Express request object
-   * @param secretKey Notch pay merchant secret key
-   * @returns Notch pay verified event object or undefined
-   */
-  verifySignature<T>(request: Request, secretKey?: string) {
-    const merchantSecretKey =
-      secretKey ??
-      (axiosInstance.defaults.headers['Grant-Authorization'] as string)
-    if (!merchantSecretKey) throw new Error('Merchant Secret key is required')
-    const signature = crypto
-      .createHmac('sha256', merchantSecretKey)
-      .update(JSON.stringify(request.body))
-      .digest('hex')
-    if (signature === request.headers['x-noth-signature']) {
-      return request.body as NotchPayEvent<T>
-    }
   }
 }
