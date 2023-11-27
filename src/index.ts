@@ -4,7 +4,9 @@ import { Request } from 'express'
 import { MiscellaneousApi } from './miscellaneous/miscellaneous.api'
 import { PaymentsApi } from './payments/payments.api'
 import TransferApi from './transfers/transfers.api'
-import { HelloResponse, NotchPayConfig, NotchPayEvent } from './type'
+import { HelloResponse, NotchPayConfig, NotchPayEvent } from './types'
+
+export type * from './types'
 
 let axiosInstance: AxiosInstance
 export default class NotchPayApi {
