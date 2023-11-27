@@ -1,5 +1,5 @@
 import NotchPayApi from '../src'
-describe('Noth Payment Test', () => {
+describe('NotchPay Payment Test', () => {
   let notchPayApi: NotchPayApi
 
   beforeAll(() => {

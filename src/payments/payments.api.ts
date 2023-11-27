@@ -10,7 +10,7 @@ import {
 export class PaymentsApi {
   constructor(private readonly axiosInstance: AxiosInstance) {}
 
-  async initialize(payload: InitializePaymentPayload) {
+  async initialize<T extends object>(payload: InitializePaymentPayload<T>) {
     const resp = await this.axiosInstance.post<PaymentResponse>(
       '/payments/initialize',
       payload

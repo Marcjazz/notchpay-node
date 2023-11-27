@@ -1,23 +1,28 @@
-import crypto from 'crypto'
-import { Request } from 'express'
 import axios, { AxiosInstance } from 'axios'
-import { HelloResponse, NotchPayConfig, NotchPayEvent } from './type'
+import * as crypto from 'crypto'
+import { Request } from 'express'
+import { MiscellaneousApi } from './miscellaneous/miscellaneous.api'
 import { PaymentsApi } from './payments/payments.api'
 import TransferApi from './transfers/transfers.api'
+import { HelloResponse, NotchPayConfig, NotchPayEvent } from './type'
+
+let axiosInstance: AxiosInstance
 export default class NotchPayApi {
   payments: PaymentsApi
   transfers: TransferApi
-  axiosInstance: AxiosInstance
-  constructor(private config: NotchPayConfig) {
-    this.axiosInstance = axios.create({
+  miscellaneous: MiscellaneousApi
+
+  constructor(config: NotchPayConfig) {
+    axiosInstance = axios.create({
       baseURL: `https://${config.endpoint}`,
       headers: {
         Authorization: config.publicKey,
         'Grant-Authorization': config.secretKey,
       },
     })
-    this.payments = new PaymentsApi(this.axiosInstance)
-    this.transfers = new TransferApi(this.axiosInstance)
+    this.payments = new PaymentsApi(axiosInstance)
+    this.transfers = new TransferApi(axiosInstance)
+    this.miscellaneous = new MiscellaneousApi(axiosInstance)
   }
 
   /**
@@ -27,7 +32,7 @@ export default class NotchPayApi {
   async getHello(): Promise<HelloResponse> {
     const {
       data: { code, ...data },
-    } = await this.axiosInstance.get<HelloResponse>('/')
+    } = await axiosInstance.get<HelloResponse>('/')
     return { code: Number(code), ...data }
   }
 
@@ -38,7 +43,9 @@ export default class NotchPayApi {
    * @returns Notch pay verified event object or undefined
    */
   verifySignature<T>(request: Request, secretKey?: string) {
-    const merchantSecretKey = secretKey ?? this.config.secretKey
+    const merchantSecretKey =
+      secretKey ??
+      (axiosInstance.defaults.headers['Grant-Authorization'] as string)
     if (!merchantSecretKey) throw new Error('Merchant Secret key is required')
     const signature = crypto
       .createHmac('sha256', merchantSecretKey)

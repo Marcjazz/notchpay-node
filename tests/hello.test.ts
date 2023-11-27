@@ -1,5 +1,5 @@
 import NotchPayApi from '../src'
-describe('Hello Noth Pay Test', () => {
+describe('Hello NotchPay Test', () => {
   let notchPayApi: NotchPayApi
 
   test('should use environment variables', () => {
