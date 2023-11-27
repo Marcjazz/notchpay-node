@@ -1,6 +1,6 @@
-import NotchPayApi from '../src'
-describe('Hello Noth Pay Test', () => {
-  let notchPayApi: NotchPayApi
+import NotchPay from '../src'
+describe('Hello NotchPay Test', () => {
+  let notchPayApi: NotchPay
 
   test('should use environment variables', () => {
     const publicKey = process.env.NOTCHPAY_PUBLIC_KEY
@@ -8,7 +8,7 @@ describe('Hello Noth Pay Test', () => {
 
     expect(publicKey).toBeDefined()
     expect(privateKey).toBeDefined()
-    notchPayApi = new NotchPayApi({
+    notchPayApi = new NotchPay({
       endpoint: 'api.notchpay.co',
       publicKey: publicKey as string,
       secretKey: privateKey as string,

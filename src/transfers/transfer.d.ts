@@ -1,5 +1,4 @@
-import { Channel, TransferChannel } from '../type'
-import { Business, FindAllResponse } from '../type'
+import { Business, Channel, FindAllResponse, TransferChannel } from '../types'
 
 export type InitializeTransferPayload = {
   /** Currency of transaction. */

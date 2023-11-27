@@ -17,7 +17,8 @@ export default class TranfersApi {
     if (!merchantSecretKey) throw new Error('Merchant Secret key is required')
     const resp = await this.axiosInstance.post<TransferResponse>(
       `/transfers/initialize`,
-      payload
+      payload,
+      { headers: { 'Grant-Authorization': merchantSecretKey } }
     )
     return resp.data
   }

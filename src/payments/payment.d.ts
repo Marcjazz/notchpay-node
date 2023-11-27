@@ -1,5 +1,4 @@
-import { FindAllResponse, PaymentChannel } from '../type'
-import { Business, Customer } from '../type'
+import { Business, Customer, FindAllResponse, PaymentChannel } from '../types'
 
 export type Item = {
   /** Description of the item. Required param */
@@ -25,7 +24,7 @@ export type Address = {
   postal_code: string
 }
 
-export type InitializePaymentPayload<T extends object = unknown> = {
+export type InitializePaymentPayload<T extends object> = {
   /**The email address of the customer is prominently displayed within your dashboard, and serves as a valuable tool for both search and tracking purposes.
    * Please note that this field allows for up to 512 characters. */
   email?: string
