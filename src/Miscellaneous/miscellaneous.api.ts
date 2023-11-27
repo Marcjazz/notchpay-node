@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios'
-import { CountryApiResponse, CurrencyApiResponse } from './miscellaneous'
+import { CountryApiResponse, CurrencyApiResponse } from './types'
 
-export class MiscellaneousApi {
+export default class MiscellaneousApi {
   constructor(private readonly axiosInstance: AxiosInstance) {}
 
   async getCountries() {

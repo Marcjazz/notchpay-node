@@ -1,10 +1,11 @@
 import axios, { AxiosInstance } from 'axios'
 import * as crypto from 'crypto'
 import { Request } from 'express'
-import { MiscellaneousApi } from './miscellaneous/miscellaneous.api'
-import { PaymentsApi } from './payments/payments.api'
-import TransferApi from './transfers/transfers.api'
+
 import { HelloResponse, NotchPayConfig, NotchPayEvent } from './types'
+import MiscellaneousApi from './miscellaneous/miscellaneous.api'
+import PaymentsApi from './payments/payments.api'
+import TransferApi from './transfers/transfers.api'
 
 export type * from './types'
 

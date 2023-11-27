@@ -7,7 +7,7 @@ import {
   PaymentsResponse,
 } from './payment'
 
-export class PaymentsApi {
+export default class PaymentsApi {
   constructor(private readonly axiosInstance: AxiosInstance) {}
 
   async initialize<T extends object>(payload: InitializePaymentPayload<T>) {
