@@ -16,6 +16,12 @@ Configure your Notch Pay API keys easily either through environment variables or
 export NOTCHPAY_PUBLIC_KEY=your_public_key
 export NOTCHPAY_PRIVATE_KEY=your_private_key
 ```
+## Features
+This package offers a comprehensive solution for seamlessly integrating Notch Pay APIs, covering essential functionalities grouped into distinct modules:
+- **Payment APIs:** Streamline Notch Pay payment integration with a user-friendly TypeScript and JavaScript function call signature.
+- **Transfer APIs:** Facilitate seamless transfer handling through Notch Pay with dedicated TypeScript and JavaScript functions, ensuring a smooth integration experience.
+- **MIscellaneous APIs:** Access various Notch Pay functionalities effortlessly using TypeScript and JavaScript function call signatures, providing a unified and intuitive interface.
+- **Webhooks:** Simplify webhook implementation with a single function call, enhancing developer efficiency in setup and management.
 
 ## Usage
 Integrating Notch Pay into your Node.js application is as easy as importing the NotchPay class and accessing the desired API functionalities:
