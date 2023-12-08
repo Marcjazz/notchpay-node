@@ -2,6 +2,7 @@ import * as crypto from 'crypto'
 import { AxiosInstance } from 'axios'
 import { Request, Response } from 'express'
 import { EventType, NotchPayEvent } from '../types'
+import { NotchPayCallback } from './webhook'
 
 export class WebhooksService {
   constructor(private axiosInstance: AxiosInstance) {}
@@ -37,10 +38,7 @@ export class WebhooksService {
   async handleEvent<T>(
     request: Request,
     response: Response,
-    callbacks: Record<
-      EventType,
-      (EventId: string, data: T) => Promise<void> | void
-    >,
+    callbacks: Partial<Record<EventType, NotchPayCallback>>,
     secretKey?: string
   ) {
     const merchantSecretKey =
@@ -51,7 +49,8 @@ export class WebhooksService {
     const eventObj = this.verifySignature<T>(request, merchantSecretKey)
     if (!eventObj) throw new Error('❌ Signature verification failed !!!')
     const { id, event, data } = eventObj
-    await callbacks[event](id, data as T)
+    const callback = callbacks[event]
+    if (callback) await callback(id, data as T)
     return response.status(200).json({
       code: 200,
       status: 'OK',
