@@ -79,7 +79,7 @@ export type NotchPayError = {
 
 export type NotchPayErrorResponse = { data: NotchPayError }
 
-export * from './miscellaneous/types.d.ts'
-export * from './payments/payment.d.ts'
-export * from './transfers/transfer.d.ts'
-export * from './webhooks/webhook.d.ts'
+export * from './miscellaneous/types'
+export * from './payments/payment'
+export * from './transfers/transfer'
+export * from './webhooks/webhook'
