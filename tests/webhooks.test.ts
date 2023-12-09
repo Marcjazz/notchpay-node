@@ -48,8 +48,8 @@ describe('NotchPay Webhook Test', () => {
         json: jest.fn() as Function,
       } as Response
 
-    const myCallback: NotchPayCallback = jest.fn(
-      (eventId: string, data: Transaction) => {
+    const myCallback: NotchPayCallback<Transaction> = jest.fn(
+      (eventId, data) => {
         console.log(`✔️ NotchPay event ${eventId} was received`)
         if (data.status === 'complete')
           console.log(

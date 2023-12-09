@@ -38,7 +38,7 @@ export class WebhooksService {
   async handleEvent<T>(
     request: Request,
     response: Response,
-    callbacks: Partial<Record<EventType, NotchPayCallback>>,
+    callbacks: Partial<Record<EventType, NotchPayCallback<T>>>,
     secretKey?: string
   ) {
     const merchantSecretKey =

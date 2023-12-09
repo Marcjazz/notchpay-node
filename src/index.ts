@@ -9,7 +9,7 @@ import { WebhooksService } from './webhooks/webhooks.service'
 export type * from './types'
 
 let axiosInstance: AxiosInstance
-export default class NotchPay {
+class NotchPay {
   payments: PaymentsApi
   transfers: TransferApi
   miscellaneous: MiscellaneousApi
@@ -40,3 +40,6 @@ export default class NotchPay {
     return { code: Number(code), ...data }
   }
 }
+
+export { NotchPay }
+export default NotchPay
