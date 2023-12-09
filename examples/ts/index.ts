@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto'
 import dotenv from 'dotenv'
 import express, { Request, Response } from 'express'
-import { InitializePaymentPayload, NotchPay } from '../../src'
+import NotchPay, { InitializePaymentPayload } from '../../src'
 
 // Load environment variables from .env file
 dotenv.config()
