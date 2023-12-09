@@ -1,8 +1,9 @@
 {
-  "name": "notchpay-node",
+  "name": "notchpay",
   "version": "1.0.0",
   "description": "Notch Pay JavaScript sdk for easy payment integrations",
   "main": "dist/index.js",
+  "types": "src/types.d.ts",
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc src/index.ts",
