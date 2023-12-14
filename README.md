@@ -1,7 +1,7 @@
 # [![npm version](https://www.notchpay.co/favicon-32x32.png)](https://www.notchpay.co/favicon-32x32.png) Notchpay NPM Package 
 Notch Pay JavaScript sdk for easy payment services integrations
 
-This project serves as a Node Package Manager (NPM) Library designed for Notch Pay. The primary objective of this package is to accelerate the integration process of Notch payment APIs for Node developers. Our aim is to empower developers to concentrate on their end goals, while we handle the intricacies on their behalf.
+This project serves as a Node Package Manager (NPM) Library designed for [NotchPay](https://notchpay.co). The primary objective of this package is to accelerate the integration process of Notch payment APIs for Node developers. Our aim is to empower developers to concentrate on their end goals, while we handle the intricacies on their behalf.
 
 ## Installation
 
@@ -27,7 +27,7 @@ This package offers a comprehensive solution for seamlessly integrating Notch Pa
 Integrating Notch Pay into your Node.js application is as easy as importing the NotchPay class and accessing the desired API functionalities:
 ```typescript
 // Your application code
-import { NotchPay, NotchPayConfig } from 'notch-pay';
+import { NotchPay, NotchPayConfig } from 'notchpay-api';
 
 const notchPayConfig: NotchPayConfig = {
   endpoint: 'api.notchpay.co',
