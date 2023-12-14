@@ -3,12 +3,12 @@ Notch Pay JavaScript sdk for easy payment services integrations
 
 This project serves as a Node Package Manager (NPM) Library designed for Notch Pay. The primary objective of this package is to accelerate the integration process of Notch payment APIs for Node developers. Our aim is to empower developers to concentrate on their end goals, while we handle the intricacies on their behalf.
 
-## Installation (comming soon)
+## Installation
 
 To install the Notch Pay Node.js package, use npm:
 
 ```bash
-npm install notch-pay
+npm install notchpay-api
 ```
 ## Configurations
 Configure your Notch Pay API keys easily either through environment variables or directly within your application.
@@ -38,7 +38,12 @@ const notchPayConfig: NotchPayConfig = {
 const notchPay = new NotchPay(notchPayConfig);
 
 // Now, you can use the notchPay instance to make API requests
-notchPay.payments.initialize(/* paymentDetails */)
+notchPay.payments
+  .initialize({
+    amount: 500,
+    currency: 'XAF',
+    phone: '+237691622731',
+  })
   .then(response => {
     // Handle the payment response
     console.log(response);
@@ -47,6 +52,24 @@ notchPay.payments.initialize(/* paymentDetails */)
     // Handle errors
     console.error(error);
   });
+```
+### Webhooks handling made easy
+Handle notchpay webhooks event just by passing your callback handler to the desired event
+```typescript
+app.post('/webhooks', (req: Request, res: Response) => {
+  const completePaymentCallback = (eventId: string, data: any) => {
+    console.log(`✔️ NotchPay completed payment event ${eventId} was received`)
+  }
+
+  const failedPaymentCallback = (eventId: string, data: any) => {
+    console.log(`✔️ NotchPay failed payment event ${eventId} was received`)
+  }
+
+  return notchPay.webhooks.handleEvent(req, res, {
+    'payment.complete': completePaymentCallback,
+    'payment.failed': failedPaymentCallback,
+  })
+})
 ```
 
 ## Tests
