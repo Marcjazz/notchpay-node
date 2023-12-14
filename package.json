@@ -2,11 +2,10 @@
   "name": "notchpay-api",
   "version": "1.0.0",
   "description": "Notch Pay JavaScript sdk for easy payment integrations",
-  "main": "dist/index.js",
-  "types": "src/types.d.ts",
+  "main": "cjs/index.js",
+  "types": "src/index.ts",
   "scripts": {
-    "start": "node dist/index.js",
-    "build": "tsc src/index.ts",
+    "build": "tsc",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
