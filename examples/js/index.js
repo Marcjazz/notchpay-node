@@ -1,7 +1,7 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const { randomUUID } = require('crypto')
-const { NotchPay } = require('../../dist')
+const { NotchPay } = require('../../cjs')
 
 // Load environment variables from .env file
 dotenv.config()
