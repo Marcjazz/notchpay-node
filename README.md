@@ -27,7 +27,7 @@ This package offers a comprehensive solution for seamlessly integrating Notch Pa
 Integrating Notch Pay into your Node.js application is as easy as importing the NotchPay class and accessing the desired API functionalities:
 ```typescript
 // Your application code
-import { NotchPay, NotchPayConfig } from 'notch-pay';
+import { NotchPay, NotchPayConfig } from 'notch-pay-api';
 
 const notchPayConfig: NotchPayConfig = {
   endpoint: 'api.notchpay.co',
