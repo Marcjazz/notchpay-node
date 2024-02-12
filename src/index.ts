@@ -5,6 +5,7 @@ import PaymentsApi from './payments/payments.api'
 import TransferApi from './transfers/transfers.api'
 import { HelloResponse, NotchPayConfig } from './types'
 import { WebhooksService } from './webhooks/webhooks.service'
+import { CustomersApi } from './customers/customers.api'
 
 export type * from './types'
 
@@ -14,6 +15,7 @@ class NotchPay {
   transfers: TransferApi
   miscellaneous: MiscellaneousApi
   webhooks: WebhooksService
+  customers: CustomersApi
 
   constructor(config: NotchPayConfig) {
     axiosInstance = axios.create({
@@ -27,6 +29,7 @@ class NotchPay {
     this.transfers = new TransferApi(axiosInstance)
     this.miscellaneous = new MiscellaneousApi(axiosInstance)
     this.webhooks = new WebhooksService(axiosInstance)
+    this.customers = new CustomersApi(axiosInstance)
   }
 
   /**

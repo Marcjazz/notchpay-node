@@ -36,15 +36,6 @@ export type Business = {
   name: string
 }
 
-export type Customer = {
-  id: string
-  name: null | string
-  email: string
-  sandbox: boolean
-  phone: null | string
-  blocked: boolean
-}
-
 export type PaymentChannel =
   | 'cm.mtn'
   | 'cm.orange'

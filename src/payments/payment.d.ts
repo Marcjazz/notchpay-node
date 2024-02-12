@@ -1,4 +1,5 @@
-import { Business, Customer, FindAllResponse, PaymentChannel } from '../types'
+import { Business, FindAllResponse, PaymentChannel } from '../types'
+import { Customer } from '../customers/customers'
 
 export type Item = {
   /** Description of the item. Required param */
