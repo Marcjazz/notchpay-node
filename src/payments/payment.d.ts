@@ -1,5 +1,6 @@
 import { Business, FindAllResponse, PaymentChannel } from '../types'
 import { Customer } from '../customers/customers'
+import { Address } from '../customers/customers'
 
 export type Item = {
   /** Description of the item. Required param */
@@ -8,21 +9,6 @@ export type Item = {
   price: number
   /** Image of the item*/
   image: string
-}
-
-export type Address = {
-  /** Please provide the name of the city, district, suburb, town, or village.*/
-  city: string
-  /** Address line 1 (e.g., street, PO Box, or company name) */
-  line1: string
-  /** Address line 2 (e.g., apartment, suite, unit, or building) */
-  line2: string
-  /** State, county, province, or region. */
-  state: string
-  /**Please provide the two-letter country code in accordance with ISO 3166-1 alpha-2 (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) standard. */
-  country: string
-  /** ZIP or postal code */
-  postal_code: string
 }
 
 export type InitializePaymentPayload<T extends object = object> = {

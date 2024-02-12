@@ -11,4 +11,13 @@ export class CustomersApi {
     )
     return { ...resp.data, code: Number(resp.data.code) }
   }
+
+
+  async update<T extends object>(payload: CreateCustomerPayload<T>) {
+    const resp = await this.axiosInstance.put<CustomerResponse<T>>(
+      '/customers',
+      payload
+    )
+    return { ...resp.data, code: Number(resp.data.code) }
+  }
 }
