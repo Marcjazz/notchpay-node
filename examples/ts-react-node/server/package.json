@@ -1,0 +1,24 @@
+{
+  "name": "ts-react-node",
+  "version": "1.0.0",
+  "description": "A sample project using notchpay-api",
+  "main": "dist/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx tsc && node dist/server.js"
+  },
+  "author": "Marco Kuidja",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "16.4.7",
+    "express": "5.0.1",
+    "joi": "^17.13.3",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0"
+  }
+}
